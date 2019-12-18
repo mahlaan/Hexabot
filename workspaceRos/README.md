@@ -25,6 +25,13 @@ Note: le processus de compilation est utile seulement dans les cas suivants:
 
 Il n'est donc pas utile de recompiler le workspace lorsque des fichiers `XML` (launch, configuration, etc...) ou `python` sont modifiés.
 
+##Controler manuellement l'hexapode
+
+	$ roslaunch phantomx_gazebo phantomx_gazebo.launch
+	-> 'Play' la simulation pour lancer le topic '/phantomx/cmd_vel'
+	$ rosrun rqt_robot_steering rqt_robot_steering
+	
+_N.B. : il faut ajouter le package `effort-controller` pour gazebo: `sudo apt-get install ros-melodic-effort-controllers`._
 
 ## Commandes utiles
 

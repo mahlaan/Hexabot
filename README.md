@@ -7,28 +7,34 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Dépendences
 
-###### A compléter avec la/les dépendences.
+Package ros: Effort controllers
 
+~~~shell
+$ sudo apt-get install ros-melodic-effort-controllers
+~~~
 
 ### Démarrer la simulation
 
-###### A compléter avec la/les commande(s) à lancer.
-```bash
-# TODO
-```
+#### Controler manuellement l'hexapode
 
+	$ roslaunch phantomx_gazebo phantomx_gazebo.launch
+	-> 'Play' la simulation pour lancer le topic '/phantomx/cmd_vel'
+	$ rosrun rqt_robot_steering rqt_robot_steering
 
 ## Groupe
 
 ### Membres
 
-###### A compléter avec les membres du groupe.
-
+* Anouar MAHLA
+* Clément BICHAT
+* Kévin BEDIN
+* Erwann LANDAIS
+* Nathan FOURNIOL
+* Aurélien GRENIER
 
 ### Gestion de projet
 
-###### A compléter avec le lien vers votre [Taiga](http://taiga.io).
-
+###### A compléter avec le lien vers votre [Taiga](https://tree.taiga.io/project/grenieau-uv-48-hexabot/us/1?milestone=251463).
 
 
 ## Structure du dépôt

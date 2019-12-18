@@ -1,16 +1,15 @@
-# Debrief du xx/xx/xxxx
+# Debrief du 18/12/2019
 
 PO: ...
 
 
 ## Bilan
 
-Pourcentage de tâches réalisées: ... %
+Pourcentage de tâches réalisées: .. %
 
 ### Ce qui a fonctionné
 
 ###### A compléter.
-
 
 ### Ce qui n'a pas fonctionné
 

@@ -17,3 +17,5 @@
     </gazebo>
 
 </robot>
+
+<!-- Voir : https://answers.ros.org/question/101346/how-to-put-multiple-visual-elements-into-a-single-link-in-a-urdf/ -->

@@ -339,6 +339,7 @@
             <material>Gazebo/Grey</material>
         </gazebo>
 
+
     </xacro:macro>
 
     <joint name="body_to_imu_joint" type="fixed">
@@ -359,7 +360,7 @@
           <cylinder radius="0.02" length="0.02"/>
         </geometry>
         <material name="Cyan">
-  14        <color rgba="0 1.0 1.0 1.0"/>
+          <color rgba="0 1.0 1.0 1.0"/>
         </material>
       </visual>
       <collision name = "imu_coll">
@@ -396,6 +397,7 @@
         <origin xyz="0.0 0.0 0.0685" rpy="0 0 0"/>
         <parent link="MP_BODY"/>
         <child link="lidar_link"/>
+
     </joint>
 
     <link name="lidar_link">
@@ -482,10 +484,11 @@
         <selfCollide>false</selfCollide>
     </gazebo> 
 
+
       <gazebo reference="lidar_link">
         <sensor type="ray" name="lidar">
-          <visualize>false</visualize>
-          <update_rate>40</update_rate>
+          <visualize>true</visualize>
+          <update_rate>5</update_rate>
           <ray>
             <scan>
               <horizontal>
@@ -497,7 +500,7 @@
             </scan>
             <range>
               <min>0.10</min>
-              <max>3.0</max>
+              <max>15.0</max>
               <resolution>0.01</resolution>
             </range>
             <noise>
@@ -507,7 +510,9 @@
             </noise>
           </ray>
           <plugin name="lidar" filename="libgazebo_ros_laser.so">
+
             <topicName>phantomx/lidar</topicName>
+
           </plugin>
         </sensor>
       </gazebo>

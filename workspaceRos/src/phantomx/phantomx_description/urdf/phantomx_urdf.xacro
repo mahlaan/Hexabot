@@ -51,8 +51,8 @@
         <xacro:leg_l xyz="0 0.1034  0.001116" rpy="0 4.7123 3.14159" suffix="lm"/>
         <xacro:leg_l xyz="-0.1248 0.06164  0.001116" rpy="0 4.7123 3.9269908169872414" suffix="lr"/>
 
-      <xacro:camera2 xyz="0 -0.08164  0.102" rpy="0 0 -1.5707" suffix="right"/>
-      <xacro:camera2 xyz="0 0.08164  0.102" rpy="0 0 1.5707" suffix="left"/>
+      <xacro:camera2 xyz="0 -0.08164  0.142" rpy="0 0 -1.5707" suffix="right"/>
+      <xacro:camera2 xyz="0 0.08164  0.142" rpy="0 0 1.5707" suffix="left"/>
 
 
     </xacro:macro>

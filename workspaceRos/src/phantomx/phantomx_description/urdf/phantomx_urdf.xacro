@@ -309,34 +309,95 @@
 
 
 
-      <joint name="car_to_lidar_joint" type="fixed">
+    <joint name="car_to_lidar_joint" type="fixed">
         <origin xyz="0.0 0.0 0.0685" rpy="0 0 0"/>
         <parent link="MP_BODY"/>
         <child link="lidar_link"/>
-      </joint>
+    </joint>
 
-      <link name="lidar_link">
-    		<inertial>
-    			<origin xyz="0.0 0.0 -0.01" rpy="0.0 0.0 0.0"/>
-    			<mass value="0.05"/>
-    			<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
-    		</inertial>
-    		<visual>
-    			<origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
-    			<geometry>
-    				<cylinder radius="0.005" length="0.072"/>
-    			</geometry>
-    			<material name="Grey">
-              <color rgba="0.20 0.20 0.20 1.0"/>
-    			</material>
-    		</visual>
-    		<collision name = "lidar_coll">
-    			<origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
-    			<geometry>
-    				<cylinder radius="0.005" length="0.072"/>
-    			</geometry>
-    		</collision>
-      </link>
+    <link name="lidar_link">
+        <inertial>
+            <origin xyz="0.0 0.0 -0.01" rpy="0.0 0.0 0.0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.005" length="0.072"/>
+            </geometry>
+            <material name="Grey">
+                <color rgba="0.20 0.20 0.20 1.0"/>
+            </material>
+        </visual>
+        <collision name = "lidar_coll">
+            <origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.005" length="0.072"/>
+            </geometry>
+        </collision>
+    </link>
+
+
+    <joint name="car_to_light_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <parent link="MP_BODY"/>
+        <child link="light_link"/>
+    </joint>
+
+    <link name="light_link">
+    </link>
+
+    <gazebo reference="light_link">
+        <light name='light_source_right' type='spot'>
+            <pose frame=''>0 0.03 0.03 1.57 0 0</pose>
+            <id>light_source</id>
+            <attenuation>
+                <range>30</range>
+                <linear>0.05</linear>
+            </attenuation>
+            <diffuse>1 1 1 0</diffuse>
+            <specular>1 0 0 1</specular>
+            <spot>
+                <inner_angle>0.5</inner_angle>
+                <outer_angle>0.6</outer_angle>
+                <falloff>1</falloff>
+            </spot>
+            <direction>0 0 -1</direction>
+        </light>
+        <light name='light_source_left' type='spot'>
+            <pose frame=''>0  -0.03 0.03 -1.57 0 0</pose>
+            <id>light_source</id>
+            <attenuation>
+                <range>30</range>
+                <linear>1.05</linear>
+            </attenuation>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 0 0 1</specular>
+            <spot>
+                <inner_angle>0.5</inner_angle>
+                <outer_angle>0.6</outer_angle>
+                <falloff>1</falloff>
+            </spot>
+            <direction>0 0 -1</direction> 
+        </light>
+        <plugin name='light_control' filename='libFlashLightPlugin.so'>
+            <enable>true</enable>
+            <light>
+                <id>cylinder/light_source_right</id>
+                <duration>1</duration>
+                <interval>0</interval>
+                <color>1 1 1</color>
+            </light>
+            <light>
+                <id>cylinder/light_source_left</id>
+                <duration>1</duration>
+                <interval>0</interval>
+                <color>1 1 1</color>
+            </light>
+        </plugin>
+        <selfCollide>false</selfCollide>
+    </gazebo> 
 
       <gazebo reference="lidar_link">
         <sensor type="ray" name="lidar">

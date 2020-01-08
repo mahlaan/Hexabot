@@ -7,7 +7,7 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Dépendences
 
-Package ros: Effort controllers
+Package ros: `Effort controllers`
 
 ~~~shell
 $ sudo apt-get install ros-melodic-effort-controllers
@@ -20,6 +20,12 @@ $ sudo apt-get install ros-melodic-effort-controllers
 	$ roslaunch phantomx_gazebo phantomx_gazebo.launch
 	-> 'Play' la simulation pour lancer le topic '/phantomx/cmd_vel'
 	$ rosrun rqt_robot_steering rqt_robot_steering
+	
+#### Accomplissement de la mission
+
+Le package associé à l'accomplissement de la mission est `workspaceRos/src/phantomx/phantomx_mission_completion`. Vous trouverez plus d'informations dans le `README.md` du package. Pour lancer la mission il faut lancer le fichier launch `phantomx_mission.launch`:
+
+	$ roslaunch phantomx_mission_completion phantomx_mission.launch
 
 ## Groupe
 

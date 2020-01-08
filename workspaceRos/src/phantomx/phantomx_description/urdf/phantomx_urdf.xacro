@@ -256,28 +256,58 @@
             <material>Gazebo/Grey</material>
         </gazebo>
 
-        <gazebo reference="MP_BODY">
-          <gravity>true</gravity>
-          <sensor name="imu_sensor" type="imu">
-            <always_on>true</always_on>
-            <update_rate>100</update_rate>
-            <visualize>true</visualize>
-            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-              <topicName>imu</topicName>
-              <bodyName>MP_BODY</bodyName>
-              <updateRateHZ>10.0</updateRateHZ>
-              <gaussianNoise>0.0</gaussianNoise>
-              <xyzOffset>0 0 0</xyzOffset>
-              <rpyOffset>0 0 0</rpyOffset>
-              <frameName>imu_link</frameName>
-            </plugin>
-            <pose>0 0 0 0 0 0</pose>
-          </sensor>
-        </gazebo>
-
-
-
     </xacro:macro>
+
+    <joint name="body_to_imu_joint" type="fixed">
+      <origin xyz="0.0 0.0 -0.025" rpy="0 0 0"/>
+      <parent link="MP_BODY"/>
+      <child link="imu_link"/>
+    </joint>
+
+    <link name="imu_link">
+      <inertial>
+        <origin xyz="0.0 0.0 0.00" rpy="0.0 0.0 0.0"/>
+        <mass value="0.05"/>
+        <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.0 0.0 0.00" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.02" length="0.02"/>
+        </geometry>
+        <material name="Cyan">
+  14        <color rgba="0 1.0 1.0 1.0"/>
+        </material>
+      </visual>
+      <collision name = "imu_coll">
+        <origin xyz="0.0 0.0 0.00" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.02" length="0.02"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <gazebo reference="imu_link">
+      <gravity>true</gravity>
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <visualize>true</visualize>
+        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+          <topicName>phantomx/imu</topicName>
+          <bodyName>imu_link</bodyName>
+          <updateRateHZ>10.0</updateRateHZ>
+          <gaussianNoise>0.0</gaussianNoise>
+          <xyzOffset>0 0 0</xyzOffset>
+          <rpyOffset>0 0 0</rpyOffset>
+          <frameName>imu_link1</frameName>
+        </plugin>
+        <pose>0 0 0 0 0 0</pose>
+      </sensor>
+    </gazebo>
+
+
+
 
       <joint name="car_to_lidar_joint" type="fixed">
         <origin xyz="0.0 0.0 0.0685" rpy="0 0 0"/>
@@ -333,8 +363,7 @@
             </noise>
           </ray>
           <plugin name="lidar" filename="libgazebo_ros_laser.so">
-            <topicName>lidar</topicName>
-            <frameName>lidar_link</frameName>
+            <topicName>phantomx/lidar</topicName>
           </plugin>
         </sensor>
       </gazebo>

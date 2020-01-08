@@ -339,7 +339,6 @@
             <material>Gazebo/Grey</material>
         </gazebo>
 
-
     </xacro:macro>
 
     <joint name="body_to_imu_joint" type="fixed">
@@ -397,6 +396,7 @@
         <origin xyz="0.0 0.0 0.0685" rpy="0 0 0"/>
         <parent link="MP_BODY"/>
         <child link="lidar_link"/>
+
 
     </joint>
 
@@ -510,6 +510,7 @@
             </noise>
           </ray>
           <plugin name="lidar" filename="libgazebo_ros_laser.so">
+
 
             <topicName>phantomx/lidar</topicName>
 

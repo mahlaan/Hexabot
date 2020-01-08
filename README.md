@@ -34,7 +34,9 @@ $ sudo apt-get install ros-melodic-effort-controllers
 
 ### Gestion de projet
 
-###### A compléter avec le lien vers votre [Taiga](https://tree.taiga.io/project/grenieau-uv-48-hexabot/us/1?milestone=251463).
+*  Lien vers le [Taiga](https://tree.taiga.io/project/grenieau-uv-48-hexabot/us/1?milestone=251463) du groupe.
+
+* Voir le dossier `reports/` pour voir les fichiers *goals* et *debrief*. 
 
 
 ## Structure du dépôt

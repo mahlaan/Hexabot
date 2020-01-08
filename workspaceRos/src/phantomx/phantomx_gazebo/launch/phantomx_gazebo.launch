@@ -21,4 +21,6 @@
 
     <node name="phantomx_walker" pkg="phantomx_gazebo" type="walker.py" />
 
+   <!-- <node name="phantomx_walker" pkg="phantomx_gazebo" type="walker_demo.py" />-->
+
 </launch>

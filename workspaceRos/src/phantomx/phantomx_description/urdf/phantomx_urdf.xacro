@@ -55,6 +55,7 @@
       <xacro:camera2 xyz="0 0.08164  0.142" rpy="0 0 1.5707" suffix="left"/>
 
 
+
     </xacro:macro>
 
 

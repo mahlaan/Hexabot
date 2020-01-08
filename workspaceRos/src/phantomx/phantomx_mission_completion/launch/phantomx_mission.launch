@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+    <include file="$(find phantomx_gazebo)/launch/phantomx_gazebo.launch"/>
+
+    <node name="phantomx_controller" pkg="phantomx_mission_completion" type="controller.py" />
+
+</launch>

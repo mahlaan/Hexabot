@@ -19,3 +19,5 @@ Les codes développés sont présents dans le dossier `src/`. Voici une descript
 
 * `controller.py`: implémentation de la navigation du robot afin d'explorer la grotte en fonction des distances aux murs.
 
+* `crackDetection.py`: fonctions permettant de détecter une fissure dans une image
+

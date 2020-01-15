@@ -55,8 +55,86 @@
       <xacro:camera2 xyz="0 0.08164  0.142" rpy="0 0 1.5707" suffix="left"/>
 
 
+	</xacro:macro>
 
-    </xacro:macro>
+
+<xacro:macro name="camera2" params="xyz rpy suffix">
+
+<joint name="phantomx_camera_${suffix}" type="fixed">
+    <parent link="MP_BODY"/>
+    <child link="camera_${suffix}"/>
+    <origin xyz="${xyz}" rpy="${rpy}" />
+</joint>
+
+<link name="camera_${suffix}">
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="0.1"/>
+    <inertia ixx="0.2" ixy="0" ixz="0" iyy="0.2" iyz="0"
+             izz="0.2"/>
+  </inertial>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.073000 0.276000 0.072000"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+         <!--<box size="0.073000 0.276000 0.072000"/>-->
+         <mesh filename="package://phantomx_description/meshes/kinect/meshes/kinect.dae" />-->
+    </geometry>
+  </visual>
+</link>
+
+<gazebo reference="camera_${suffix}">
+ <sensor name="camera_{suffix}" type="depth">
+    <update_rate>20</update_rate>
+    <camera>
+      <horizontal_fov>1.047198</horizontal_fov>
+      <image>
+        <width>640</width>
+        <height>480</height>
+        <format>R8G8B8</format>
+      </image>
+      <clip>
+        <near>0.05</near>
+        <far>3</far>
+      </clip>
+    </camera>
+
+
+    <plugin name="camera_plugin" filename="libgazebo_ros_openni_kinect.so">
+          <baseline>0.2</baseline>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>0.0</updateRate>
+          <cameraName>camera_${suffix}</cameraName>
+          <imageTopicName>/phantomx/camera_${suffix}/color/image_raw</imageTopicName>
+          <cameraInfoTopicName>/phantomx/camera_${suffix}/color/camera_info</cameraInfoTopicName>
+          <depthImageTopicName>/phantomx/camera_${suffix}/depth/image_raw</depthImageTopicName>
+          <depthImageCameraInfoTopicName>/phantomx/camera_${suffix}/depth/camera_info</depthImageCameraInfoTopicName>
+          <pointCloudTopicName>/phantomx/camera_${suffix}/depth/points</pointCloudTopicName>
+          <frameName>camera_${suffix}</frameName>
+          <pointCloudCutoff>0.5</pointCloudCutoff>
+          <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+          <distortionK1>0</distortionK1>
+          <distortionK2>0</distortionK2>
+          <distortionK3>0</distortionK3>
+          <distortionT1>0</distortionT1>
+          <distortionT2>0</distortionT2>
+          <CxPrime>0</CxPrime>
+          <Cx>0</Cx>
+          <Cy>0</Cy>
+          <focalLength>0</focalLength>
+          <hackBaseline>0</hackBaseline>
+        </plugin>
+
+  </sensor>
+</gazebo>
+</xacro:macro>
+
+
 
 
  <xacro:macro name="camera2" params="xyz rpy suffix">
@@ -363,34 +441,147 @@
 
     </xacro:macro>
 
-      <joint name="car_to_lidar_joint" type="fixed">
+    <joint name="body_to_imu_joint" type="fixed">
+      <origin xyz="0.0 0.0 -0.025" rpy="0 0 0"/>
+      <parent link="MP_BODY"/>
+      <child link="imu_link"/>
+    </joint>
+
+    <link name="imu_link">
+      <inertial>
+        <origin xyz="0.0 0.0 0.00" rpy="0.0 0.0 0.0"/>
+        <mass value="0.05"/>
+        <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.0 0.0 0.00" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.02" length="0.02"/>
+        </geometry>
+        <material name="Cyan">
+          <color rgba="0 1.0 1.0 1.0"/>
+        </material>
+      </visual>
+      <collision name = "imu_coll">
+        <origin xyz="0.0 0.0 0.00" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.02" length="0.02"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <gazebo reference="imu_link">
+      <gravity>true</gravity>
+      <sensor name="imu_sensor" type="imu">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <visualize>true</visualize>
+        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+          <topicName>phantomx/imu</topicName>
+          <bodyName>imu_link</bodyName>
+          <updateRateHZ>10.0</updateRateHZ>
+          <gaussianNoise>0.0</gaussianNoise>
+          <xyzOffset>0 0 0</xyzOffset>
+          <rpyOffset>0 0 0</rpyOffset>
+          <frameName>imu_link1</frameName>
+        </plugin>
+        <pose>0 0 0 0 0 0</pose>
+      </sensor>
+    </gazebo>
+
+
+
+
+    <joint name="car_to_lidar_joint" type="fixed">
         <origin xyz="0.0 0.0 0.0685" rpy="0 0 0"/>
         <parent link="MP_BODY"/>
         <child link="lidar_link"/>
-      </joint>
+    </joint>
 
-      <link name="lidar_link">
-    		<inertial>
-    			<origin xyz="0.0 0.0 -0.01" rpy="0.0 0.0 0.0"/>
-    			<mass value="0.05"/>
-    			<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
-    		</inertial>
-    		<visual>
-    			<origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
-    			<geometry>
-    				<cylinder radius="0.005" length="0.072"/>
-    			</geometry>
-    			<material name="Grey">
-              <color rgba="0.20 0.20 0.20 1.0"/>
-    			</material>
-    		</visual>
-    		<collision name = "lidar_coll">
-    			<origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
-    			<geometry>
-    				<cylinder radius="0.005" length="0.072"/>
-    			</geometry>
-    		</collision>
-      </link>
+    <link name="lidar_link">
+        <inertial>
+            <origin xyz="0.0 0.0 -0.01" rpy="0.0 0.0 0.0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.005" length="0.072"/>
+            </geometry>
+            <material name="Grey">
+                <color rgba="0.20 0.20 0.20 1.0"/>
+            </material>
+        </visual>
+        <collision name = "lidar_coll">
+            <origin xyz="0.0 0.0 -0.01" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.005" length="0.072"/>
+            </geometry>
+        </collision>
+    </link>
+
+
+    <joint name="car_to_light_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <parent link="MP_BODY"/>
+        <child link="light_link"/>
+    </joint>
+
+    <link name="light_link">
+    </link>
+
+    <gazebo reference="light_link">
+        <light name='light_source_right' type='spot'>
+            <pose frame=''>0 0.03 0.03 2. 0 0</pose>
+            <id>light_source</id>
+            <attenuation>
+                <range>30</range>
+                <linear>0.05</linear>
+            </attenuation>
+            <diffuse>1 1 1 0</diffuse>
+            <specular>1 0 0 1</specular>
+            <spot>
+                <inner_angle>1</inner_angle>
+                <outer_angle>2</outer_angle>
+                <falloff>1</falloff>
+            </spot>
+            <direction>0 0 -1</direction>
+        </light>
+        <light name='light_source_left' type='spot'>
+            <pose frame=''>0  -0.03 0.03 -2. 0 0</pose>
+            <id>light_source</id>
+            <attenuation>
+                <range>30</range>
+                <linear>1.05</linear>
+            </attenuation>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 0 0 1</specular>
+            <spot>
+                <inner_angle>1</inner_angle>
+                <outer_angle>2</outer_angle>
+                <falloff>1</falloff>
+            </spot>
+            <direction>0 0 -1</direction> 
+        </light>
+        <plugin name='light_control' filename='libFlashLightPlugin.so'>
+            <enable>true</enable>
+            <light>
+                <id>cylinder/light_source_right</id>
+                <duration>1</duration>
+                <interval>0</interval>
+                <color>1 1 1</color>
+            </light>
+            <light>
+                <id>cylinder/light_source_left</id>
+                <duration>1</duration>
+                <interval>0</interval>
+                <color>1 1 1</color>
+            </light>
+        </plugin>
+        <selfCollide>false</selfCollide>
+    </gazebo> 
+
 
       <gazebo reference="lidar_link">
         <sensor type="ray" name="lidar">
@@ -417,8 +608,10 @@
             </noise>
           </ray>
           <plugin name="lidar" filename="libgazebo_ros_laser.so">
+
             <topicName>lidar</topicName>
             <frameName>lidar_link</frameName>
+
           </plugin>
         </sensor>
       </gazebo>

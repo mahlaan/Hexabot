@@ -21,6 +21,11 @@ Package ros: `Hector-mapping` (SLAM navigation)
 
 	$ sudo apt-get install ros-melodic-hector-mapping
 	
+Package ros: `Hector-imu-attitude` (IMU rectification)
+
+	$ sudo apt-get install ros-melodic-hector-imu-attitude-to-tf
+
+	
 ### Démarrer la simulation
 
 #### Controler manuellement l'hexapode

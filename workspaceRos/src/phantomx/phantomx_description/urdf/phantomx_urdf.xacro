@@ -509,11 +509,17 @@
               <stddev>0.01</stddev>
             </noise>
           </ray>
+<<<<<<< HEAD
           <plugin name="lidar" filename="libgazebo_ros_laser.so">
 
 
             <topicName>phantomx/lidar</topicName>
 
+=======
+          <plugin name="lidar_controller" filename="libgazebo_ros_laser.so">
+            <topicName>/phantomx/lidar</topicName>
+            <frameName>lidar_link</frameName>
+>>>>>>> crackDetection.py upgraded | Scan urdf repaired
           </plugin>
         </sensor>
       </gazebo>

@@ -1,4 +1,4 @@
-# Objectifs du xx/xx/xxxx
+# Objectifs du XX/XX/XXXX
 
 PO: ...
 

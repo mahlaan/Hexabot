@@ -13,6 +13,11 @@ Package ros: `Effort controllers`
 $ sudo apt-get install ros-melodic-effort-controllers
 ~~~
 
+Package ros: `Openni-camera`
+
+	$ sudo apt-get install ros-melodic-openni-camera
+	
+	
 ### Démarrer la simulation
 
 #### Controler manuellement l'hexapode

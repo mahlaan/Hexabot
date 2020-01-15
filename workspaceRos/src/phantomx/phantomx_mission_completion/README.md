@@ -6,12 +6,19 @@ Ce pakage permet d'accomplir la mission de détection de fissure de la grotte.
 
 ### Lancer la mission
 
-Pour lancer la mission il faut lancer le fichier launch `phantomx_mission.launch`:
+Pour lancer la mission (seulement gazebo) il faut lancer le fichier launch `phantomx_mission.launch`:
 
 	$ roslaunch phantomx_mission_completion phantomx_mission.launch
 	
 Ce fichier launch lance la simulation gazebo ainsi que les nodes permettant l'exécution de la mission.
+	
+Si l'on souhaite Rviz (déjà configuré) en plus:
 
+	$ roslaunch phantomx_mission_completion phantomx_mission_rviz.launch
+	
+Il pourra ếtre nécessaire de changer la variable d'environnement suivante:
+
+        export LC_NUMERIC="en_US.UTF-8"
 
 ### Scripts
 

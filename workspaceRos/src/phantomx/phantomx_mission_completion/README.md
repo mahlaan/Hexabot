@@ -10,7 +10,7 @@ Pour lancer la mission (seulement gazebo) il faut lancer le fichier launch `phan
 
 	$ roslaunch phantomx_mission_completion phantomx_mission.launch
 	
-Ce fichier launch lance la simulation gazebo ainsi que les nodes permettant l'exécution de la mission.
+Ce fichier launch lance la simulation gazebo ainsi que les nodes permettant l'exécution de la mission. En particulier le package `hector_ma
 	
 Si l'on souhaite Rviz (déjà configuré) en plus:
 
@@ -19,6 +19,12 @@ Si l'on souhaite Rviz (déjà configuré) en plus:
 Il pourra ếtre nécessaire de changer la variable d'environnement suivante:
 
         export LC_NUMERIC="en_US.UTF-8"
+
+### Infos Topics
+
+* `/phantomx/lidar`: Scan du lidar
+
+* `/slam_out_pose`: Position estimée par l'algorithme SLAM
 
 ### Scripts
 

@@ -8,4 +8,9 @@
   <arg name="rvizconf" default="$(find phantomx_mission_completion)/config/hexabot.rviz" />
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconf)"/>
 
+    <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
+        <param name="odom_frame" value="base_link" />
+        <param name="scan_topic" value="/phantomx/lidar"/>
+    </node>
+
 </launch>

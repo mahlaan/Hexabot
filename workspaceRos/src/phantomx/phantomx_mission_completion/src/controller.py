@@ -17,12 +17,6 @@ def lidarRead(data):
     i_min,i_max = 0,len(data.ranges)-1
     dr_list,dl_list = data.ranges[i_min:i_min+40],data.ranges[i_max-40:i_max]
     dl,dr = np.median(dl_list),np.median(dr_list)
-    rospy.logwarn("--------------")
-    rospy.logwarn(i_max)
-    rospy.logwarn("Distance left:")
-    rospy.logwarn(dl)
-    rospy.logwarn("Distance right:")
-    rospy.logwarn(dr)
     kp = 0.1
     ki = 0.01
 
@@ -49,12 +43,6 @@ def lidarRead(data):
     if (np.median(data.ranges[355:365]) >= 1.25) and vel_msg.linear.x == 0:
         vel_msg.linear.x = 0.6
 
-    rospy.logwarn("Vitesse translation:")
-    rospy.logwarn(vel_msg.linear.x)
-
-    rospy.logwarn("Distance frontale:")
-    rospy.logwarn(np.median(data.ranges[355:365]))
-
     vel_msg.angular.z = e*kp + error*ki
 
     if vel_msg.angular.z >= 0.3:
@@ -62,8 +50,6 @@ def lidarRead(data):
     if vel_msg.angular.z <= -0.3:
         vel_msg.angular.z = -0.3
 
-    rospy.logwarn("Vitesse angulaire:")
-    rospy.logwarn(vel_msg.angular.z)
 
     cmd.publish(vel_msg)
 

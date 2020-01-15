@@ -1,32 +1,35 @@
-# Debrief du 18/12/2019
+# Debrief du 15/01/2020
 
-PO: ...
-
+PO: Clément Bichat
 
 ## Bilan
 
-Pourcentage de tâches réalisées: .. %
+Pourcentage de tâches réalisées: 50 %
 
 ### Ce qui a fonctionné
 
-###### A compléter.
+* Le positionnement du robot dans la cave est opérationnel (slam)
+* Détection de failles sur l'image est fonctionnel
 
 ### Ce qui n'a pas fonctionné
 
-###### A compléter.
-
+* Perte de temps car mauvais choix techniques au départ (choix d'un mauvais package, d'une mauvaise méthode)
+* Perte de temps sur le controller et sur le positionnement des failles
 
 ### Retour d'expérience du PO
 
-###### A compléter.
+* A certains moment, bonne communication sur les problèmes rencontrés, bonne entraides.
+* Mais il faut continuer à améliorer la communication pour être plus efficace
+* Manque d'efficacité à certains moments
 
 
 ### Conseils pour le prochain PO
 
-###### A compléter.
-
+* Ne pas hésiter à faire des petits points avec ses collègues afin de prendre un peu de recul (pour ne pas s'embarquer dans quelque chose d'inutile)
+* Il peut être intéressant de travailler à plusieurs (2) au début d'une tâche avant de revenir ensuite chacun sur sa subtask.
+* Bien distinguer les tâches les plus complexes.
 
 
 ## Nouvelles mesures
 
-###### A compléter avec les nouvelles mesures prises pour répondre aux problèmes rencontrées par l'équipe pendant le sprint. Ces mesures peuvent aller d'une convention de nommage à un changement radical dans la construction du robot, ou encore un flow spécifique de travail.
+* Faire des petits points plus souvent en distinguant les difficultés que le groupe a à faire face.

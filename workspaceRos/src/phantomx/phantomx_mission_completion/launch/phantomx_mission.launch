@@ -4,6 +4,10 @@
     <include file="$(find phantomx_gazebo)/launch/phantomx_gazebo.launch"/>
 
     <node name="phantomx_controller" pkg="phantomx_mission_completion" type="controller.py" />
-    <node name="rviz" pkg="rviz" type="rviz" />
+
+    <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
+        <param name="odom_frame" value="base_link" />
+        <param name="scan_topic" value="/phantomx/lidar"/>
+    </node>
 
 </launch>

@@ -34,3 +34,4 @@ Les codes développés sont présents dans le dossier `src/`. Voici une descript
 
 * `crackDetection.py`: fonctions permettant de détecter une fissure dans une image
 
+* `picAcquisition.py`: crée un noeud ROS permettant de reprendre les images des caméras et de les republier chaque seconde sur des topics différents

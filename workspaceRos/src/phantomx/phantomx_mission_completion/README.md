@@ -10,7 +10,7 @@ Pour lancer la mission (seulement gazebo) il faut lancer le fichier launch `phan
 
 	$ roslaunch phantomx_mission_completion phantomx_mission.launch
 	
-Ce fichier launch lance la simulation gazebo ainsi que les nodes permettant l'exécution de la mission. En particulier le package `hector_ma
+Ce fichier launch lance la simulation gazebo ainsi que les nodes permettant l'exécution de la mission. En particulier les packages `hector_mapping` et `hector_imu_attitude_to_tf`.
 	
 Si l'on souhaite Rviz (déjà configuré) en plus:
 
@@ -26,6 +26,8 @@ Il pourra ếtre nécessaire de changer la variable d'environnement suivante:
 
 * `/slam_out_pose`: Position estimée par l'algorithme SLAM
 
+* `/phantomx/crack_image`: Image avec les fissures détectées (canal depth traité par un masque).
+
 ### Scripts
 
 Les codes développés sont présents dans le dossier `src/`. Voici une description sommaire des scripts:
@@ -34,4 +36,4 @@ Les codes développés sont présents dans le dossier `src/`. Voici une descript
 
 * `crackDetection.py`: fonctions permettant de détecter une fissure dans une image
 
-* `picAcquisition.py`: crée un noeud ROS permettant de reprendre les images des caméras et de les republier chaque seconde sur des topics différents
+* `crackPub.py`: crée un noeud ROS permettant de reprendre les images de la caméra et de publier chaque seconde les images dans lesquelles des fissures ont été détectées.

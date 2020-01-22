@@ -118,7 +118,7 @@
      <pointCloudTopicName>/phantomx/camera_${suffix}/depth/points</pointCloudTopicName>
      <frameName>camera_${suffix}</frameName>
      <pointCloudCutoff>0.1</pointCloudCutoff>
-     <pointCloudCutoffMax>2.0</pointCloudCutoffMax>
+     <pointCloudCutoffMax>10.0</pointCloudCutoffMax>
      <distortionK1>0</distortionK1>
      <distortionK2>0</distortionK2>
      <distortionK3>0</distortionK3>

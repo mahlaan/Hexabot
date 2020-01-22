@@ -19,4 +19,6 @@
         <param name="scan_topic" value="/phantomx/lidar"/>
         <param name="map_size" value="2000"/>
     </node>
+
+
 </launch>

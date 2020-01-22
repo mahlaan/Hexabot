@@ -338,24 +338,6 @@
             <material>Gazebo/Grey</material>
         </gazebo>
 
-        <gazebo reference="MP_BODY">
-          <gravity>true</gravity>
-          <sensor name="imu_sensor" type="imu">
-            <always_on>true</always_on>
-            <update_rate>100</update_rate>
-            <visualize>true</visualize>
-            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-              <topicName>imu</topicName>
-              <bodyName>MP_BODY</bodyName>
-              <updateRateHZ>10.0</updateRateHZ>
-              <gaussianNoise>0.0</gaussianNoise>
-              <xyzOffset>0 0 0</xyzOffset>
-              <rpyOffset>0 0 0</rpyOffset>
-              <frameName>imu_link</frameName>
-            </plugin>
-            <pose>0 0 0 0 0 0</pose>
-          </sensor>
-        </gazebo>
     </xacro:macro>
 
     <joint name="body_to_imu_joint" type="fixed">
@@ -413,6 +395,8 @@
         <origin xyz="0.0 0.0 0.0685" rpy="0 0 0"/>
         <parent link="MP_BODY"/>
         <child link="lidar_link"/>
+
+
     </joint>
 
     <link name="lidar_link">
@@ -522,8 +506,6 @@
     </gazebo>
 
 
-
-
       <gazebo reference="lidar_link">
         <sensor type="ray" name="lidar">
           <visualize>false</visualize>
@@ -548,7 +530,6 @@
               <stddev>0.01</stddev>
             </noise>
           </ray>
-
           <plugin name="lidar_controller" filename="libgazebo_ros_laser.so">
             <topicName>/phantomx/lidar</topicName>
             <frameName>lidar_link</frameName>

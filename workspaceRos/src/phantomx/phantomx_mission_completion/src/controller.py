@@ -12,6 +12,17 @@ vel_msg = Twist()
 pose = Pose()
 
 def lidarControllerBangBang(data):
+    """
+    While lidar doesn't detect wall from right or left, robot go straight. When a wall is detected, robot turns to the other side.
+
+    Parameters:
+
+    Input:
+        data:
+            sensor_msgs.msg: data from lidar
+    Output:
+        --- None ---
+    """
     kp=1
     i_min,i_max = 0,len(data.ranges)-1
     dr_list,dl_list = data.ranges[i_min:i_min+100],data.ranges[i_max-100:i_max]
@@ -21,6 +32,9 @@ def lidarControllerBangBang(data):
 
 
 if __name__ == '__main__':
+    """
+        Go Straight while there is any detection of wall closer than range 1 (meter) from left or right side.
+    """
 
     rospy.init_node("controller", anonymous=False, log_level=rospy.DEBUG)
     vel_msg.linear.x = 0.4

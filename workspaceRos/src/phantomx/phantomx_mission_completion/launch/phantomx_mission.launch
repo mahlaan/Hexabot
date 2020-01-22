@@ -4,6 +4,7 @@
     <include file="$(find phantomx_gazebo)/launch/phantomx_gazebo.launch"/>
 
     <node name="phantomx_controller" pkg="phantomx_mission_completion" type="controller.py" />
+    <node name="phantomx_crackPub" pkg="phantomx_mission_completion" type="crackPub.py" />
 
         <node pkg="hector_imu_attitude_to_tf" type="imu_attitude_to_tf_node" name="imu_attitude_to_tf_node">
             <param name="base_stabilized_frame" value="base_stabilized" />

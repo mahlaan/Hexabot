@@ -17,6 +17,7 @@
     <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
         <param name="odom_frame" value="base_stabilized" />
         <param name="scan_topic" value="/phantomx/lidar"/>
+        <param name="map_size" value="2000"/>
     </node>
 
 

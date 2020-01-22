@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
     PATH='../ressources/ImagesTest/'
 
-    img = cv.imread(PATH+'image6.png')
+    img = cv.imread(PATH+'image14.png')
 
     img,dist=preprocessing(img)
 

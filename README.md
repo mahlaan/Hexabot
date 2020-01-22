@@ -13,6 +13,19 @@ Package ros: `Effort controllers`
 $ sudo apt-get install ros-melodic-effort-controllers
 ~~~
 
+Package ros: `Openni-camera` (Kinect module)
+
+	$ sudo apt-get install ros-melodic-openni-camera
+
+Package ros: `Hector-mapping` (SLAM navigation)
+
+	$ sudo apt-get install ros-melodic-hector-mapping
+	
+Package ros: `Hector-imu-attitude` (IMU rectification)
+
+	$ sudo apt-get install ros-melodic-hector-imu-attitude-to-tf
+
+	
 ### Démarrer la simulation
 
 #### Controler manuellement l'hexapode
@@ -27,6 +40,10 @@ Le package associé à l'accomplissement de la mission est `workspaceRos/src/pha
 
 	$ roslaunch phantomx_mission_completion phantomx_mission.launch
 
+Cette simulation ne donnera pas de rendu via RVIZ, pour lancer le RVIZ correspondant:
+
+	$ roslaunch phantomx_mission_completion phantomx_mission_rviz.launch
+	
 ## Groupe
 
 ### Membres

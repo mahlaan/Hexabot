@@ -88,7 +88,7 @@ class CrackDetector():
             Main loop for Publisher call
         """
         while not rospy.is_shutdown():
-            if self.imgFrontDepth is not None:
+            if (self.imgFrontDepth is not None) and (self.imgFrontDepth is not None):
                 self.publisherFront()
             self.rate.sleep()
                                

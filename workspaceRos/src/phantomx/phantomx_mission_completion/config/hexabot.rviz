@@ -133,17 +133,12 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        camera_base_front:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         camera_front:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_right:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -308,6 +303,14 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /phantomx/crack_markers
+      Name: MarkerArray
+      Namespaces:
+        {}
+      Queue Size: 100
       Value: true
   Enabled: true
   Global Options:

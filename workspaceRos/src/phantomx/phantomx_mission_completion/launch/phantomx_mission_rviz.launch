@@ -5,6 +5,7 @@
 
     <node name="phantomx_controller" pkg="phantomx_mission_completion" type="controller.py" />
     <node name="phantomx_crackPub" pkg="phantomx_mission_completion" type="crackPub.py" />
+    <node name="phantomx_crackMap" pkg="phantomx_mission_completion" type="crackMapping.py" />
 
   <arg name="rvizconf" default="$(find phantomx_mission_completion)/config/hexabot.rviz" />
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconf)"/>

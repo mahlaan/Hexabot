@@ -479,7 +479,7 @@
                 <outer_angle>2</outer_angle>
                 <falloff>1</falloff>
             </spot>
-            <direction>0 0 -1</direction> 
+            <direction>0 0 -1</direction>
         </light>
         <light name='light_source_front' type='spot'>
             <pose frame=''>0.1 0 0.03 0 -2. 0</pose>
@@ -495,7 +495,7 @@
                 <outer_angle>2</outer_angle>
                 <falloff>1</falloff>
             </spot>
-            <direction>0 0 -1</direction> 
+            <direction>0 0 -1</direction>
         </light>
         <plugin name='light_control' filename='libFlashLightPlugin.so'>
             <enable>true</enable>
@@ -519,14 +519,14 @@
             </light>
         </plugin>
         <selfCollide>false</selfCollide>
-    </gazebo> 
+    </gazebo>
 
 
 
 
       <gazebo reference="lidar_link">
         <sensor type="ray" name="lidar">
-          <visualize>true</visualize>
+          <visualize>false</visualize>
           <update_rate>5</update_rate>
           <ray>
             <scan>

@@ -5,9 +5,16 @@
 
     <node name="phantomx_controller" pkg="phantomx_mission_completion" type="controller.py" />
 
-    <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
-        <param name="odom_frame" value="base_link" />
-        <param name="scan_topic" value="/phantomx/lidar"/>
-    </node>
+        <node pkg="hector_imu_attitude_to_tf" type="imu_attitude_to_tf_node" name="imu_attitude_to_tf_node">
+            <param name="base_stabilized_frame" value="base_stabilized" />
+            <param name="base_frame" value="base_link"/>
+            <remap from="imu_topic" to="/phantomx/imu"/>
+        </node>
+
+        <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
+            <param name="odom_frame" value="base_stabilized" />
+            <param name="scan_topic" value="/phantomx/lidar"/>
+            <param name="map_size" value="2000"/>
+        </node>
 
 </launch>

@@ -40,7 +40,7 @@ Package ros: `Map Server` (sauvergarde la map)
 	
 #### Accomplissement de la mission
 
-Le package associé à l'accomplissement de la mission est `workspaceRos/src/phantomx/phantomx_mission_completion`. Vous trouverez plus d'informations dans le `README.md` du package. Pour lancer la mission il faut lancer le fichier launch `phantomx_mission.launch`:
+Le package associé à l'accomplissement de la mission est `workspaceRos/src/phantomx/phantomx_mission_completion`. Vous trouverez plus d'informations dans le  [README](workspaceRos/src/phantomx/phantomx_mission_completion/README.md) du package. Pour lancer la mission il faut lancer le fichier launch `phantomx_mission.launch`:
 
 	$ roslaunch phantomx_mission_completion phantomx_mission.launch
 

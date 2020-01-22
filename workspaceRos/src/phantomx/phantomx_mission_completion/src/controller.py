@@ -3,6 +3,7 @@
 import rospy
 import rospkg
 import numpy as np
+import statistics
 
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist, Pose

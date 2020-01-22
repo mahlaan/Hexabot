@@ -24,7 +24,6 @@ Package ros: `Hector-mapping` (SLAM navigation)
 Package ros: `Hector-imu-attitude` (IMU rectification)
 
 	$ sudo apt-get install ros-melodic-hector-imu-attitude-to-tf
-
 	
 ### Démarrer la simulation
 

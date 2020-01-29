@@ -140,7 +140,10 @@ class CrackMap():
         
         tst = np.uint8( bin_current_depthPic.copy() )
         
-        contours, hierarchy = cv2.findContours(tst, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) #[1:]
+        try :
+            contours, hierarchy = cv2.findContours(tst, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)#[1:]
+        except :
+            contours, hierarchy = cv2.findContours(tst, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[1:]
 
         for i in range (len(contours)):
             cnt = contours[i]
@@ -257,7 +260,7 @@ class CrackMap():
         self.allCracksInCave = []
         self.nb_cracks = len(self.allCracksInCave)
         
-        self.dist_center_cracks = 3.0
+        self.dist_center_cracks = 0.5
         self.dist_close_cracks = 4.0
         #self.current_depthPic = None
         

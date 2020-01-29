@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+Created on Wed Jan 29 10:50:57 2020
+
+@author: ehnla
+"""
+
 
 from crackDetection import *
 
@@ -17,20 +23,9 @@ import time
 from visualization_msgs.msg import Marker, MarkerArray
 
 
-
-
 class CrackMap():
-    """
-    
-    Class associated with all the operations linked to the detection and the 
-    positioning in the reference frame of the cave of the crack barycenters.
-    Subscribes to the topic "/phantomx/crack_image", which returns depth pictures
-    of the detected cracks on pictures (when a crack is detected); publish the 
-    MarkerArray topic "/phantomx/crack_markers", containing the markers associated
-    with all the barycenter of the cracks detected since the beginning of the simulation.
-    
-    """
 
+    
     def callbackDepthPic(self,img):
         """
         Callback : take the ROS message returned by /phantomx/crack_image (Image). Save the ROS message
@@ -48,17 +43,9 @@ class CrackMap():
         self.depthMsg = img
         self.depthPic = self.bridge.imgmsg_to_cv2(img)
         self.PicID += 1
-        return(None)
-    
-    def callbackCIFrontDepth(self,cami):
+        return None
 
-        self.CIFrontDepth = cami
-        self.CIDtopic.unregister()
-        return(None)
-
-
-        
-
+	    
     def callbackCIFrontColor(self,cami):
         """
         Temporary callback : only take once the camera_info matrix, then
@@ -73,10 +60,10 @@ class CrackMap():
         """
         self.CIFrontColor = cami
         self.CIPtopic.unregister()
-        return(None)
+        return None
 
         
-    def fromPix2camRef(self,pixD):
+    def fromPix2camRef(self,pixD, check_pix = False):
         """
         Express the coordinates of a pixel on the picture frame into the camera
         sensor frame.
@@ -97,19 +84,39 @@ class CrackMap():
                 
         """
         
+        # take camera_info 
         self.cameraModel.fromCameraInfo(self.CIFrontColor)
         
+        # remove distortion 
         pix_rec = self.cameraModel.rectifyPoint( (pixD[0],pixD[1]) )
-        
-        p_3D = self.cameraModel.projectPixelTo3dRay((pix_rec[0],pix_rec[1]))
 
+        # gives the unit vector between the point and the centre of the camera
+        # (passing through an unfixed laser beam), in the image reflex
+        p_3D = self.cameraModel.projectPixelTo3dRay((pix_rec[0],pix_rec[1]))
+        
+        # change from image frame to camera frame for unit vector
         p_3D = np.matmul(self.R_rpic2rcam,p_3D)
         
-
+        # Associates a laser beam with the unit vector using the information 
+        # depth (pix[2])
         Mp3d = np.array([p_3D[0],p_3D[1],p_3D[2]]).T
         
         p_real_3D = (pixD[2]/p_3D[0])*Mp3d
 
+        if (check_pix):
+        
+            print(p_real_3D)
+            
+            # take 3d point in camera ref, turn into picture ref
+            
+            p_c_3D = np.matmul(self.R_rcam2rpic,p_real_3D)
+            
+            # take 3d point in picture ref in 2D
+            
+            p_check = self.cameraModel.project3dToPixel(p_c_3D)
+            # normally, norm(p_check - pixD) < 1e-10
+            print("p_check : ", p_check) 
+            
         return p_real_3D
     
     def fromCamRef2caveRef(self,pr3d,current_depthMsg):
@@ -132,6 +139,7 @@ class CrackMap():
                 
         """
         p_cam = PointStamped()
+
         
         p_cam.header.seq = current_depthMsg.header.seq
         
@@ -140,13 +148,10 @@ class CrackMap():
         p_cam.point.y = pr3d[1]
         p_cam.point.z = pr3d[2]
 
-
-
-        
         stamp = rospy.Time.now()
         p_cam.header.stamp = stamp
+
         p_cave = self.buffer.transform_full(p_cam,'map',  current_depthMsg.header.stamp, 'camera_front')
-        
 
         return p_cave
     
@@ -163,42 +168,42 @@ class CrackMap():
             current picture
 
         """
+        allpts = []
+        
         current_depthPic = self.depthPic.copy()
         current_depthMsg = self.depthMsg
         self.cur_PicID = self.PicID
         
-
-        
+        # binarize the current depth picture (in order to select the contours of the cracks
+        # on the picture)
         bin_current_depthPic = cv2.threshold(current_depthPic,
                 1e-5, 255,
                 cv2.THRESH_BINARY)[1]
-
-
-        # barycenter only        
-        allpts = []
         
         tst = np.uint8( bin_current_depthPic.copy() )
         
-        try :
-            contours, hierarchy = cv2.findContours(tst, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)#[1:]
-        except :
+        try:
+            contours, hierarchy = cv2.findContours(tst, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        except:
             contours, hierarchy = cv2.findContours(tst, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[1:]
 
         for i in range (len(contours)):
+            # for each contour corresponding to a crack, return the barycenter of this crack, and express 
+            # it into the cave frame
             cnt = contours[i]
             M = cv2.moments(cnt)
             cx = int(M['m10']/(M['m00']+1*10**-5))
             cy = int(M['m01']/(M['m00']+1*10**-5))
             depth = current_depthPic[cy,cx]
             bary_fis = self.fromCamRef2caveRef(self.fromPix2camRef( (cx,cy,depth) ), current_depthMsg )
-            if bary_fis.point.z > 0.15:
+            if(bary_fis.point.z > 0.15):   
+                # odd condition, added to remove problems related to frame changes 
+                # (indicates points related to cracks at the robot position)
+ 
                 allpts.append(bary_fis)
-                
-        return(allpts)
+        return allpts
     
-    
-    
-    def checkSameCracks(self,allpts, dist = 0.5, min_dist = 0.5):
+    def checkSameCracks(self,allpts, dist = 0.5):
         """
         Check if the new crack barycenters detected are not too close of the last
         crack barycenters. Suppress the new crack barycenters that are too much close
@@ -222,18 +227,19 @@ class CrackMap():
             while j < len(allpts):
                 nbary_fis = allpts[j]
                 nx,ny,nz = nbary_fis.point.x, nbary_fis.point.y, nbary_fis.point.z
+                
                 nPt = np.array([[nx],[ny],[nz]])
                 if ( np.linalg.norm(nPt-Pt) < dist):
+                    # suppress the new points if distance between pts really small
                     del(allpts[j])
-                elif (np.linalg.norm(nPt)<min_dist):
-                    del(allpts[j])
+
                 j+= 1
                 
         self.allCracksInCave += allpts     
-        return(None)
+        return None
         
     
-    def displayCracks(self, display_console = True):
+    def displayCracks(self, display_console = False):
         """
         Display all the barycenter of the cracks detected, into the topic 
         /phantomx/crack_markers and also in the terminal (chosen by the user)
@@ -249,6 +255,7 @@ class CrackMap():
         
         if (display_console):
             if (self.nb_cracks!= len(self.allCracksInCave)):
+                # Only display into the terminal if new cracks have been found
                 print("---------------- %% Cracks found %% -----------------\n")
                 
                 for i in range(len(self.allCracksInCave)):
@@ -256,7 +263,6 @@ class CrackMap():
                     print(self.allCracksInCave[i])
                     print("\n")
                     
-                    #marker = self.allCracksInCave[i]
                 self.nb_cracks = len(self.allCracksInCave)
         
         if (True):
@@ -286,11 +292,10 @@ class CrackMap():
                 marker.lifetime = rospy.Duration(1)
                 liste_marker.append(marker)
                 
-            
 
             self.markerPub.publish(MarkerArray(markers=liste_marker))
             
-        return(None)
+        return None
     
     def checkCracks(self):
         """
@@ -303,16 +308,17 @@ class CrackMap():
 
         """
         allpts = self.allPix2world()
-        self.checkSameCracks(allpts,self.dist_center_cracks,self.dist_close_cracks)
+        self.checkSameCracks(allpts,self.dist_center_cracks)
         if (self.cur_PicID == self.PicID):
-            # during all the treatments, no more pics were sent --> we can suppress the currently saved pic
+
             self.depthMsg = None
             self.depthPic = None
-        return(None)
+        return None
         
     
     
     def __init__(self,rate):
+
         """
         
         Constructor of the CrackMap class. 
@@ -366,31 +372,26 @@ class CrackMap():
         self.bridge = CvBridge()
         self.PicID = 0
         self.cur_PicID = 0
-        self.CIFrontDepth = None
         self.CIFrontColor = None
         self.depthMsg = None
         self.depthPic = None
         self.allCracksInCave = []
         self.nb_cracks = len(self.allCracksInCave)
         
-        self.dist_center_cracks = 0.5
-        self.dist_close_cracks = 4.0
-        #self.current_depthPic = None
+        self.dist_center_cracks = 0.2
         
         self.buffer = tf2.Buffer(rospy.Duration(60)) # prend 60s de tf 
         self.listener = tf2.TransformListener(self.buffer)
         
     
-        self.CIDtopic = rospy.Subscriber("/phantomx/camera_front/depth/camera_info", CamInfoMSG,self.callbackCIFrontDepth)
         self.CIPtopic = rospy.Subscriber("/phantomx/camera_front/color/camera_info", CamInfoMSG,self.callbackCIFrontColor)
         rospy.Subscriber("/phantomx/crack_image", ImageMSG,self.callbackDepthPic)
 
-    
+
         self.rate = rospy.Rate(rate)
         
         self.markerPub = rospy.Publisher('/phantomx/crack_markers', MarkerArray, queue_size=10)
 
-        
         time.sleep(3)
         
         self.cameraModel = image_geometry.PinholeCameraModel()
@@ -398,16 +399,17 @@ class CrackMap():
         self.R_rcam2rpic = np.array([[0.0,-1.0,0.0],[0.,0.,-1.0],[1.0,0.0,0.0]])
         self.R_rpic2rcam = np.linalg.inv(self.R_rcam2rpic)
         
-
-        
         while not rospy.is_shutdown():
             if (self.depthMsg is not None):
+
                 self.checkCracks()
             self.displayCracks()
             self.rate.sleep()
-
+        
+        return None
 
 
 if __name__ == "__main__":
     rospy.init_node("crackMapping", anonymous=False, log_level=rospy.DEBUG)
     cm = CrackMap(1)
+

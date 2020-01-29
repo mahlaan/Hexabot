@@ -385,8 +385,7 @@ class CrackMap():
         self.allCracksInCave = []
         self.nb_cracks = len(self.allCracksInCave)
         
-        self.dist_center_cracks = 0.5
-
+        self.dist_center_cracks = 0.1
         
         self.buffer = tf2.Buffer(rospy.Duration(60)) # prend 60s de tf 
         self.listener = tf2.TransformListener(self.buffer)

@@ -24,7 +24,7 @@ Il pourra ếtre nécessaire de changer la variable d'environnement suivante:
 
 * `/phantomx/lidar`: Scan du lidar
 
-* `/slam_out_pose`: Position estimée du rebot par l'algorithme SLAM (_hector_mapping_)
+* `/slam_out_pose`: Position estimée du robot par l'algorithme SLAM (_hector_mapping_)
 
 * `/map`: Map générée par l'agorithme de SLAM
 

@@ -25,6 +25,10 @@ Package ros: `Hector-imu-attitude` (IMU rectification)
 
 	$ sudo apt-get install ros-melodic-hector-imu-attitude-to-tf
 
+Package ros: `Map Server` (sauvergarde la map)
+
+	$ sudo apt-get install ros-melodic-map-server
+
 	
 ### Démarrer la simulation
 
@@ -36,13 +40,18 @@ Package ros: `Hector-imu-attitude` (IMU rectification)
 	
 #### Accomplissement de la mission
 
-Le package associé à l'accomplissement de la mission est `workspaceRos/src/phantomx/phantomx_mission_completion`. Vous trouverez plus d'informations dans le `README.md` du package. Pour lancer la mission il faut lancer le fichier launch `phantomx_mission.launch`:
+Le package associé à l'accomplissement de la mission est `workspaceRos/src/phantomx/phantomx_mission_completion`. Vous trouverez plus d'informations dans le  [README](workspaceRos/src/phantomx/phantomx_mission_completion/README.md) du package. Pour lancer la mission il faut lancer le fichier launch `phantomx_mission.launch`:
 
 	$ roslaunch phantomx_mission_completion phantomx_mission.launch
 
 Cette simulation ne donnera pas de rendu via RVIZ, pour lancer le RVIZ correspondant:
 
 	$ roslaunch phantomx_mission_completion phantomx_mission_rviz.launch
+	
+Pour sauvegarder la map générée:
+
+	$ rosrun map_server map_saver -f MapName
+	
 	
 ## Groupe
 
